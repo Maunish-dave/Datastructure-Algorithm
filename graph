@@ -10,6 +10,7 @@ private:
 public:
     Graph(int v);
     void BFS(int i);
+    void DFS(int i);
     void add_edege(int v, int w);
 };
 Graph::Graph(int v)
@@ -45,7 +46,33 @@ void Graph::BFS(int s)
 
     }
 }
+void Graph::DFS(int s)
+{
+    bool *visited = new bool[V];
+    for(int i = 0;i<V;i++)
+    {
+        visited[i] = false;
+    }
+    list <int> stc;
+    visited[s] = true;
+    stc.push_back(s);
+    list <int>::iterator i;
+    while(!stc.empty())
+    {
+        s = stc.back();
+        cout << s << "-";
+        stc.pop_back();
+        for(i = adj[s].begin(); i!=adj[s].end();++i)
+        {
+            if(!visited[*i])
+            {
+                visited[*i] = true;
+                stc.push_back(*i);
+            }
+        }
+    }
 
+}
 void Graph::add_edege(int v,int w)
 {
     adj[v].push_back(w);
@@ -59,6 +86,8 @@ int main(){
   g.add_edege(2, 3);
     g.add_edege(3, 3);
     g.BFS(2);
+    cout << endl;
+    g.DFS(2);
 
 
 }
